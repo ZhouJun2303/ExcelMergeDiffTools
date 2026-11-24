@@ -13,7 +13,6 @@ namespace Hlwd.AOT
         public static GameLauncher Instance;
 
         // 游戏流程状态机
-        GameProcedureFSM<GameProcedureState> gameProcedureFsm;
 
         private void Awake()
         {
@@ -38,7 +37,6 @@ namespace Hlwd.AOT
             fsm.AddState(new ProcedureGetGBABTestParams(GameProcedureState.InitABTest, fsm));
             fsm.AddState(new ProcedureCheckHotfix(GameProcedureState.CheckHotfix, fsm));
             fsm.AddState(new ProcedureDownloadAssets(GameProcedureState.DownloadAssets, fsm));
-            fsm.AddState(new ProcedureSyncArchive(GameProcedureState.SyncArchive, fsm));
             fsm.AddState(new ProcedureStartGame(GameProcedureState.StartGame, fsm));
             fsm.AddState(new ProcedureExitGame(GameProcedureState.ExitGame, fsm));
             fsm.StartFsm(GameProcedureState.Launch);
@@ -52,6 +50,7 @@ namespace Hlwd.AOT
         public void StartGame()
         {
             gameProcedureFsm?.SetState(GameProcedureState.InitABTest);
+
 
         }
 
@@ -72,7 +71,6 @@ namespace Hlwd.AOT
                     Debug.LogError($"{err.Data["StackTrace"]}\n{err}");
                     return;
                 }
-                Debug.LogError(str);
             }
         }
     }
